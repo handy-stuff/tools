@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timesheet Calculator</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="code/style.css">
+  <script src="code/jspdf.umd.min.js"></script>
+  <script src="code/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Back Link -->
+    <a href="../../index.html" class="back-link" data-testid="link-back">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 3L5 8l5 5"/></svg>
+      Back to Tools
+    </a>
+
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-area">
+        <svg class="logo-icon" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="Timesheet Calculator">
+          <rect x="2" y="4" width="28" height="24" rx="3" stroke="currentColor" stroke-width="2"/>
+          <line x1="2" y1="12" x2="30" y2="12" stroke="currentColor" stroke-width="2"/>
+          <line x1="10" y1="4" x2="10" y2="28" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+          <line x1="20" y1="4" x2="20" y2="28" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="24" cy="20" r="3" fill="currentColor" opacity="0.5"/>
+        </svg>
+        <h1>Timesheet Calculator</h1>
+      </div>
+    </header>
+
+    <!-- Name Field -->
+    <div class="name-field-wrapper">
+      <label for="employee-name" class="name-label">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2.5 14c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>
+        Name <span class="required">*</span>
+      </label>
+      <input type="text" id="employee-name" placeholder="Enter your name" required data-testid="input-employee-name">
+      <span class="name-error" id="name-error">Name is required</span>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrapper">
+      <table id="timesheet">
+        <thead>
+          <tr>
+            <th class="col-index">#</th>
+            <th class="col-date">Date</th>
+            <th class="col-time">Start Time</th>
+            <th class="col-time">End Time</th>
+            <th class="col-hours">Hours</th>
+            <th class="col-actions no-print">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="days-body">
+          <!-- rows added by JS -->
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4" class="total-label">Total Hours</td>
+            <td class="total-value"><span id="total-hours">0.00</span></td>
+            <td class="no-print"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="actions-bar no-print">
+      <button class="btn btn-add" onclick="addDay()" data-testid="button-add-day">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
+        Add Day
+      </button>
+      <button class="btn btn-copy" onclick="copyLastDay()" data-testid="button-copy-day">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="8" height="8" rx="1.5"/><path d="M3 11V3.5A.5.5 0 013.5 3H11"/></svg>
+        Copy Last Day
+      </button>
+      <button class="btn btn-calc" onclick="calculateAll()" data-testid="button-calculate">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><line x1="5" y1="6" x2="11" y2="6"/><line x1="5" y1="10" x2="11" y2="10"/><line x1="8" y1="3" x2="8" y2="9"/></svg>
+        Calculate
+      </button>
+      <button class="btn btn-save" onclick="saveAsPDF()" data-testid="button-save-pdf">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8m0 0l-3-3m3 3l3-3"/><path d="M2 11v2.5a.5.5 0 00.5.5h11a.5.5 0 00.5-.5V11"/></svg>
+        Save PDF
+      </button>
+      <button class="btn btn-print" onclick="printSheet()" data-testid="button-print">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6V2h8v4"/><rect x="2" y="6" width="12" height="6" rx="1"/><path d="M4 12v2h8v-2"/></svg>
+        Print
+      </button>
+    </div>
+  </div>
+
+  <script src="code/app.js"></script>
+</body>
+</html>
